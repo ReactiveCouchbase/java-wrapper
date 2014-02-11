@@ -12,6 +12,12 @@ import scala.util.Failure
 import scala.Some
 import scala.util.Success
 
+object FutureImplicits {
+  implicit def ScalaFutureToReactiveCouchbaseFuture[T](future: Future[T])(implicit ec: ExecutionContext): org.reactivecouchbase.japi.concurrent.Future[T] = {
+    FutureHelper.toRCFuture[T](future, ec)
+  }
+}
+
 object FutureHelper {
 
   def toRCFuture[T](future: Future[T], ec: ExecutionContext): org.reactivecouchbase.japi.concurrent.Future[T] = {
