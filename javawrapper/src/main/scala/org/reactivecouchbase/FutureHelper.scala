@@ -9,6 +9,10 @@ import scala.collection.JavaConversions._
 import scala.util.Success
 import scala.util.Failure
 import java.util
+import play.api.libs.json._
+import scala.util.Failure
+import scala.Some
+import scala.util.Success
 
 object FutureHelper {
 
@@ -68,5 +72,11 @@ object ScalaHelper {
         case r: SpatialViewRowWithDocs if !query.willIncludeDocs() => new Row[T](d = None, id = r.getId, key = r.getKey, value = r.getValue )
       }.toList))
     }(ec)
+  }
+
+  def n1qlSearch[T](query: String, reader: Reader[T], bucket: CouchbaseBucket, ec: ExecutionContext): scala.concurrent.Future[java.util.List[T]] = {
+    CouchbaseN1QL.N1QL(query)(bucket).toList(new Reads[T] {
+      def reads(json: JsValue): JsResult[T] = new JsSuccess[T](reader.read(org.reactivecouchbase.json.Json.parse(Json.stringify(json))).get())
+    }, ec).map(l => new java.util.ArrayList[T](asJavaCollection(l)))(ec)
   }
 }
