@@ -1,6 +1,8 @@
 package org.reactivecouchbase.japi;
 
+import com.couchbase.client.protocol.views.DesignDocument;
 import com.couchbase.client.protocol.views.Query;
+import com.couchbase.client.protocol.views.SpatialView;
 import com.couchbase.client.protocol.views.View;
 import net.spy.memcached.PersistTo;
 import net.spy.memcached.ReplicateTo;
@@ -11,10 +13,7 @@ import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
 import org.reactivecouchbase.japi.concurrent.Future;
-import org.reactivecouchbase.json.Format;
-import org.reactivecouchbase.json.Json;
-import org.reactivecouchbase.json.Reader;
-import org.reactivecouchbase.json.Writer;
+import org.reactivecouchbase.json.*;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.ExecutionContext$;
 
@@ -24,7 +23,7 @@ import java.util.concurrent.Executors;
 
 public class CouchbaseBucket {
 
-    private final org.reactivecouchbase.CouchbaseBucket bucket;
+    final org.reactivecouchbase.CouchbaseBucket bucket;
 
     private final Integer expirationMillis;
     private final PersistTo persistTo;
@@ -61,6 +60,10 @@ public class CouchbaseBucket {
         this.es = ec;
         this.ec = ExecutionContext$.MODULE$.fromExecutorService(es);
         this.couchbase = Couchbase$.MODULE$;
+    }
+
+    public String docName(String name) {
+        return bucket.cbDriver().mode().name() + name;
     }
 
     public CouchbaseBucket withExecutor(ExecutorService ec) {
@@ -171,9 +174,30 @@ public class CouchbaseBucket {
         return FutureHelper$.MODULE$.toRCFuture(ScalaHelper$.MODULE$.n1qlSearch(query, reader, bucket, ec), ec);
     }
 
+    public <T> Future<Functionnal.Option<T>> N1QLHeadOption(String query, Reader<T> reader) {
+        return FutureHelper$.MODULE$.toRCFuture(ScalaHelper$.MODULE$.n1qlHeadOption(query, reader, bucket, ec), ec);
+    }
 
+    public Future<SpatialView> spatialView(String docName, String viewName) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.spatialView(docName, viewName, bucket, ec), ec);
+    }
 
-    // TODO : design doc mgmt
+    public Future<DesignDocument> designDocument(String docName) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.designDocument(docName, bucket, ec), ec);
+    }
+
+    public Future<OperationStatus> createDesignDoc(String name, JsObject value) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.createDesignDoc(name, Json.stringify(value), bucket, ec), ec);
+    }
+
+    public Future<OperationStatus> createDesignDoc(String name, String value) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.createDesignDoc(name, value, bucket, ec), ec);
+    }
+
+    public Future<OperationStatus> deleteDesignDoc(String name) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.deleteDesignDoc(name, bucket, ec), ec);
+    }
+
     // TODO : atomic update support
     // TODO : crud support
     // TODO : rewrite play java api

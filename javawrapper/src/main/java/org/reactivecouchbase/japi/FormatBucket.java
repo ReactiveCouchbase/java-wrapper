@@ -1,15 +1,15 @@
 package org.reactivecouchbase.japi;
 
+import com.couchbase.client.protocol.views.DesignDocument;
 import com.couchbase.client.protocol.views.Query;
+import com.couchbase.client.protocol.views.SpatialView;
 import com.couchbase.client.protocol.views.View;
 import net.spy.memcached.ops.OperationStatus;
-import org.reactivecouchbase.FutureHelper$;
-import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
 import org.reactivecouchbase.japi.concurrent.Future;
 import org.reactivecouchbase.json.Format;
-import org.reactivecouchbase.json.Reader;
+import org.reactivecouchbase.json.JsObject;
 
 import java.util.List;
 
@@ -21,6 +21,10 @@ public class FormatBucket<T> {
     FormatBucket(CouchbaseBucket bucket, Format<T> fmt) {
         this.bucket = bucket;
         this.fmt = fmt;
+    }
+
+    public String docName(String name) {
+        return bucket.docName(name);
     }
 
     public Future<List<T>> find(String docName, String viewName, Query query) {
@@ -65,5 +69,29 @@ public class FormatBucket<T> {
 
     public Future<List<T>> N1QL(String query) {
         return bucket.N1QL(query, fmt);
+    }
+
+    public Future<Functionnal.Option<T>> N1QLHeadOption(String query) {
+        return bucket.N1QLHeadOption(query, fmt);
+    }
+
+    public Future<SpatialView> spatialView(String docName, String viewName) {
+        return bucket.spatialView(docName, viewName);
+    }
+
+    public Future<DesignDocument> designDocument(String docName) {
+        return bucket.designDocument(docName);
+    }
+
+    public Future<OperationStatus> createDesignDoc(String name, JsObject value) {
+        return bucket.createDesignDoc(name, value);
+    }
+
+    public Future<OperationStatus> createDesignDoc(String name, String value) {
+        return bucket.createDesignDoc(name, value);
+    }
+
+    public Future<OperationStatus> deleteDesignDoc(String name) {
+        return bucket.deleteDesignDoc(name);
     }
 }
