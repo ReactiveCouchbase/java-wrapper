@@ -11,6 +11,7 @@ import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
 import org.reactivecouchbase.japi.concurrent.Future;
+import org.reactivecouchbase.json.Format;
 import org.reactivecouchbase.json.Json;
 import org.reactivecouchbase.json.Reader;
 import org.reactivecouchbase.json.Writer;
@@ -80,6 +81,10 @@ public class CouchbaseBucket {
 
     public CouchbaseBucket withClusterOpts(PersistTo value1, ReplicateTo value2) {
         return new CouchbaseBucket(bucket, expirationMillis, value1, value2, es);
+    }
+
+    public <T> FormatBucket<T> withFormat(Format<T> fmt) {
+        return new FormatBucket<T>(this, fmt);
     }
 
     public <T> Future<List<T>> find(String docName, String viewName, Query query, Reader<T> reader) {
@@ -161,4 +166,10 @@ public class CouchbaseBucket {
     public Future<OperationStatus> flush() {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.flush(bucket, ec), ec);
     }
+
+    // TODO : design doc mgmt
+    // TODO : atomic update support
+    // TODO : N1QL support
+    // TODO : crud support
+    // TODO : rewrite play java api
 }
