@@ -3,10 +3,13 @@ package org.reactivecouchbase.japi;
 import com.couchbase.client.protocol.views.Query;
 import com.couchbase.client.protocol.views.View;
 import net.spy.memcached.ops.OperationStatus;
+import org.reactivecouchbase.FutureHelper$;
+import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
 import org.reactivecouchbase.japi.concurrent.Future;
 import org.reactivecouchbase.json.Format;
+import org.reactivecouchbase.json.Reader;
 
 import java.util.List;
 
@@ -58,5 +61,9 @@ public class FormatBucket<T> {
 
     public Future<View> view(String docName, String view) {
         return bucket.view(docName, view);
+    }
+
+    public Future<List<T>> N1QL(String query) {
+        return bucket.N1QL(query, fmt);
     }
 }

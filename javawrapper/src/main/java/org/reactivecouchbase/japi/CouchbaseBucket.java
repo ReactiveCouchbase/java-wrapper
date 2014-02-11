@@ -2,13 +2,10 @@ package org.reactivecouchbase.japi;
 
 import com.couchbase.client.protocol.views.Query;
 import com.couchbase.client.protocol.views.View;
-import com.google.common.base.Function;
-import com.sun.istack.internal.Nullable;
 import net.spy.memcached.PersistTo;
 import net.spy.memcached.ReplicateTo;
 import net.spy.memcached.ops.OperationStatus;
 import org.reactivecouchbase.Couchbase$;
-import org.reactivecouchbase.CouchbaseN1QL$;
 import org.reactivecouchbase.FutureHelper$;
 import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
@@ -18,7 +15,6 @@ import org.reactivecouchbase.json.Format;
 import org.reactivecouchbase.json.Json;
 import org.reactivecouchbase.json.Reader;
 import org.reactivecouchbase.json.Writer;
-import scala.collection.JavaConversions$;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.ExecutionContext$;
 
@@ -174,6 +170,8 @@ public class CouchbaseBucket {
     public <T> Future<List<T>> N1QL(String query, Reader<T> reader) {
         return FutureHelper$.MODULE$.toRCFuture(ScalaHelper$.MODULE$.n1qlSearch(query, reader, bucket, ec), ec);
     }
+
+
 
     // TODO : design doc mgmt
     // TODO : atomic update support
