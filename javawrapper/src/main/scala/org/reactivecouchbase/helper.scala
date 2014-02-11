@@ -6,8 +6,6 @@ import org.reactivecouchbase.client.Row
 import org.reactivecouchbase.json.Reader
 import org.reactivecouchbase.client.CouchbaseFutures._
 import scala.collection.JavaConversions._
-import scala.util.Success
-import scala.util.Failure
 import java.util
 import play.api.libs.json._
 import scala.util.Failure
@@ -79,4 +77,14 @@ object ScalaHelper {
       def reads(json: JsValue): JsResult[T] = new JsSuccess[T](reader.read(org.reactivecouchbase.json.Json.parse(Json.stringify(json))).get())
     }, ec).map(l => new java.util.ArrayList[T](asJavaCollection(l)))(ec)
   }
+
+  def n1qlHeadOption[T](query: String, reader: Reader[T], bucket: CouchbaseBucket, ec: ExecutionContext): scala.concurrent.Future[org.reactivecouchbase.common.Functionnal.Option[T]] = {
+    CouchbaseN1QL.N1QL(query)(bucket).headOption(new Reads[T] {
+      def reads(json: JsValue): JsResult[T] = new JsSuccess[T](reader.read(org.reactivecouchbase.json.Json.parse(Json.stringify(json))).get())
+    }, ec).map {
+      case Some(head) => org.reactivecouchbase.common.Functionnal.Option.some[T](head)
+      case None => org.reactivecouchbase.common.Functionnal.Option.none[T]()
+    }(ec)
+  }
+
 }
