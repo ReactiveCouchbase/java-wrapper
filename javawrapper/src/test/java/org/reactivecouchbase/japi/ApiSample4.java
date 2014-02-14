@@ -2,8 +2,6 @@ package org.reactivecouchbase.japi;
 
 import com.couchbase.client.protocol.views.Query;
 import com.google.common.base.Function;
-import com.sun.istack.internal.Nullable;
-import net.spy.memcached.ops.OperationStatus;
 import org.reactivecouchbase.ReactiveCouchbaseDriver;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
@@ -14,8 +12,6 @@ import org.reactivecouchbase.json.Json;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static org.reactivecouchbase.json.Syntax.$;
 
 public class ApiSample4 {
 

@@ -1,11 +1,12 @@
 package org.reactivecouchbase.japi;
 
 import com.google.common.base.Function;
-import com.sun.istack.internal.Nullable;
-import net.spy.memcached.ops.OperationStatus;
 import org.reactivecouchbase.ReactiveCouchbaseDriver;
 import org.reactivecouchbase.common.Functionnal;
-import org.reactivecouchbase.json.*;
+import org.reactivecouchbase.json.Format;
+import org.reactivecouchbase.json.JsResult;
+import org.reactivecouchbase.json.JsValue;
+import org.reactivecouchbase.json.Json;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,9 +29,9 @@ public class ApiSample3 {
             @Override
             public JsResult<Address> read(JsValue value) {
                 return combine(
-                        value.field("number").read(String.class),
-                        value.field("street").read(String.class),
-                        value.field("city").read(String.class)
+                    value.field("number").read(String.class),
+                    value.field("street").read(String.class),
+                    value.field("city").read(String.class)
                 ).map(new Function<Functionnal.T3<String, String, String>, Address>() {
                     @Override
                     public Address apply(Functionnal.T3<String, String, String> input) {
@@ -41,9 +42,9 @@ public class ApiSample3 {
             @Override
             public JsValue write(Address value) {
                 return Json.obj(
-                        $("number", value.number),
-                        $("street", value.street),
-                        $("city", value.city)
+                    $("number", value.number),
+                    $("street", value.street),
+                    $("city", value.city)
                 );
             }
         };
@@ -88,10 +89,10 @@ public class ApiSample3 {
             @Override
             public JsValue write(Person value) {
                 return Json.obj(
-                        $("name", value.name),
-                        $("surname", value.surname),
-                        $("age", value.age),
-                        $("address", Address.FORMAT.write(value.address))
+                    $("name", value.name),
+                    $("surname", value.surname),
+                    $("age", value.age),
+                    $("address", Address.FORMAT.write(value.address))
                 );
             }
         };
