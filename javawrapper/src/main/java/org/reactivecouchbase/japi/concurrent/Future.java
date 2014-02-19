@@ -53,7 +53,13 @@ public class Future<T> {
             @Override
             public T get(long l, TimeUnit timeUnit) throws InterruptedException, ExecutionException, TimeoutException {
                 promise.promiseLock.await(l, timeUnit);
-                return promise.internalResult.get().get();
+                if (!promise.isCompleted()) throw new RuntimeException("Underlying promise is not completed yet.");
+                Functionnal.Try<T> tr = promise.internalResult.get();
+                if (tr == null) {
+                    // wut ???
+                    return null;
+                }
+                return tr.get();
             }
         };
     }
