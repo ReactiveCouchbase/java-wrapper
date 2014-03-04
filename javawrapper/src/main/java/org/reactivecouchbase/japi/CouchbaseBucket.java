@@ -34,7 +34,7 @@ public class CouchbaseBucket {
 
     public CouchbaseBucket(org.reactivecouchbase.CouchbaseBucket currentBucket) {
         this.bucket = currentBucket;
-        this.expirationMillis = -1;
+        this.expirationMillis = 0;
         this.persistTo = PersistTo.ZERO;
         this.replicateTo = ReplicateTo.ZERO;
         this.es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -44,7 +44,7 @@ public class CouchbaseBucket {
 
     public CouchbaseBucket(org.reactivecouchbase.CouchbaseBucket currentBucket, ExecutorService ec) {
         this.bucket = currentBucket;
-        this.expirationMillis = -1;
+        this.expirationMillis = 0;
         this.persistTo = PersistTo.ZERO;
         this.replicateTo = ReplicateTo.ZERO;
         this.es = ec;
