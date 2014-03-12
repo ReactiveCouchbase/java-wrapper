@@ -13,15 +13,15 @@ import scala.Some
 import scala.util.Success
 
 object FutureImplicits {
-  implicit def ScalaFutureToReactiveCouchbaseFuture[T](future: Future[T])(implicit ec: ExecutionContext): org.reactivecouchbase.japi.concurrent.Future[T] = {
+  implicit def ScalaFutureToReactiveCouchbaseFuture[T](future: Future[T])(implicit ec: ExecutionContext): org.reactivecouchbase.concurrent.Future[T] = {
     FutureHelper.toRCFuture[T](future, ec)
   }
 }
 
 object FutureHelper {
 
-  def toRCFuture[T](future: Future[T], ec: ExecutionContext): org.reactivecouchbase.japi.concurrent.Future[T] = {
-    val jpromise = new org.reactivecouchbase.japi.concurrent.Promise[T]()
+  def toRCFuture[T](future: Future[T], ec: ExecutionContext): org.reactivecouchbase.concurrent.Future[T] = {
+    val jpromise = new org.reactivecouchbase.concurrent.Promise[T]()
     future.onComplete {
       case Success(result) => jpromise.success(result)
       case Failure(e) => jpromise.failure(e)

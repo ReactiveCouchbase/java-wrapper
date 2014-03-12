@@ -37,7 +37,7 @@ object ApplicationBuild extends Build {
     .settings(
       resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
       libraryDependencies += "org.reactivecouchbase" %% "reactivecouchbase-core" % "0.2-SNAPSHOT",
-      libraryDependencies += "org.reactivecouchbase" %% "json-lib" % "0.2-SNAPSHOT",
+      libraryDependencies += "org.reactivecouchbase" % "json-lib" % "0.2-SNAPSHOT",
       libraryDependencies += "com.google.code.findbugs" % "jsr305" % "1.3.+",
       organization := "org.reactivecouchbase",
       version := appVersion,

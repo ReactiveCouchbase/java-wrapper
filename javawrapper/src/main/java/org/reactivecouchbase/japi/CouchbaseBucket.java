@@ -12,7 +12,7 @@ import org.reactivecouchbase.FutureHelper$;
 import org.reactivecouchbase.ScalaHelper$;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
-import org.reactivecouchbase.japi.concurrent.Future;
+import org.reactivecouchbase.concurrent.Future;
 import org.reactivecouchbase.json.*;
 import scala.concurrent.ExecutionContext;
 import scala.concurrent.ExecutionContext$;

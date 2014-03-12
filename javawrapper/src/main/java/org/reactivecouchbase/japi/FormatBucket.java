@@ -7,7 +7,7 @@ import com.couchbase.client.protocol.views.View;
 import net.spy.memcached.ops.OperationStatus;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
-import org.reactivecouchbase.japi.concurrent.Future;
+import org.reactivecouchbase.concurrent.Future;
 import org.reactivecouchbase.json.Format;
 import org.reactivecouchbase.json.JsObject;
 
