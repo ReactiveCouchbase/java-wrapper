@@ -10,6 +10,7 @@ import net.spy.memcached.ops.OperationStatus;
 import org.reactivecouchbase.Couchbase$;
 import org.reactivecouchbase.FutureHelper$;
 import org.reactivecouchbase.ScalaHelper$;
+import org.reactivecouchbase.client.OpResult;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
 import org.reactivecouchbase.concurrent.Future;
@@ -114,19 +115,19 @@ public class CouchbaseBucket {
         return FutureHelper$.MODULE$.toRCFuture(ScalaHelper$.MODULE$.javaOptGet(key, reader, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> incr(String key, Integer of) {
+    public Future<OpResult> incr(String key, Integer of) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> incr(String key, Long of) {
+    public Future<OpResult> incr(String key, Long of) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> decr(String key, Integer of) {
+    public Future<OpResult> decr(String key, Integer of) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> decr(String key, Long of) {
+    public Future<OpResult> decr(String key, Long of) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec);
     }
 
@@ -146,27 +147,27 @@ public class CouchbaseBucket {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.asJavaLong(couchbase.decrAndGet(key, of, bucket, ec), ec), ec);
     }
 
-    public <T> Future<OperationStatus> set(String key, T value, Writer<T> fmt) {
+    public <T> Future<OpResult> set(String key, T value, Writer<T> fmt) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.javaSet(key, expirationMillis, Json.stringify(fmt.write(value)), persistTo, replicateTo, bucket, ec), ec);
     }
 
-    public <T> Future<OperationStatus> add(String key, T value, Writer<T> fmt) {
+    public <T> Future<OpResult> add(String key, T value, Writer<T> fmt) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.javaAdd(key, expirationMillis, Json.stringify(fmt.write(value)), persistTo, replicateTo, bucket, ec), ec);
     }
 
-    public <T> Future<OperationStatus> replace(String key, T value, Writer<T> fmt) {
+    public <T> Future<OpResult> replace(String key, T value, Writer<T> fmt) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.javaReplace(key, expirationMillis, Json.stringify(fmt.write(value)), persistTo, replicateTo, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> delete(String key){
+    public Future<OpResult> delete(String key){
         return FutureHelper$.MODULE$.toRCFuture(couchbase.delete(key, persistTo, replicateTo, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> flush(int delay) {
+    public Future<OpResult> flush(int delay) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.flush(delay, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> flush() {
+    public Future<OpResult> flush() {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.flush(bucket, ec), ec);
     }
 
@@ -186,15 +187,15 @@ public class CouchbaseBucket {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.designDocument(docName, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> createDesignDoc(String name, JsObject value) {
+    public Future<OpResult> createDesignDoc(String name, JsObject value) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.createDesignDoc(name, Json.stringify(value), bucket, ec), ec);
     }
 
-    public Future<OperationStatus> createDesignDoc(String name, String value) {
+    public Future<OpResult> createDesignDoc(String name, String value) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.createDesignDoc(name, value, bucket, ec), ec);
     }
 
-    public Future<OperationStatus> deleteDesignDoc(String name) {
+    public Future<OpResult> deleteDesignDoc(String name) {
         return FutureHelper$.MODULE$.toRCFuture(couchbase.deleteDesignDoc(name, bucket, ec), ec);
     }
 

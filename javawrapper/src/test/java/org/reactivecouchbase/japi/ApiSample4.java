@@ -5,7 +5,7 @@ import com.google.common.base.Function;
 import org.reactivecouchbase.ReactiveCouchbaseDriver;
 import org.reactivecouchbase.client.Row;
 import org.reactivecouchbase.common.Functionnal;
-import org.reactivecouchbase.japi.concurrent.Future;
+import org.reactivecouchbase.concurrent.Future;
 import org.reactivecouchbase.json.JsObject;
 import org.reactivecouchbase.json.Json;
 
