@@ -4,7 +4,7 @@ import Keys._
 object ApplicationBuild extends Build {
 
   val appName         = "java-wrapper"
-  val appVersion      = "0.3-SNAPSHOT"
+  val appVersion      = "0.3"
   val appScalaVersion = "2.11.1"
   //val appScalaBinaryVersion = "2.10"
   val appScalaCrossVersions = Seq("2.11.1", "2.10.4")
@@ -36,8 +36,8 @@ object ApplicationBuild extends Build {
     .settings(baseSettings: _*)
     .settings(
       resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      libraryDependencies += "org.reactivecouchbase" %% "reactivecouchbase-core" % "0.3-SNAPSHOT",
-      libraryDependencies += "org.reactivecouchbase" % "json-lib" % "0.3-SNAPSHOT",
+      libraryDependencies += "org.reactivecouchbase" %% "reactivecouchbase-core" % "0.3",
+      libraryDependencies += "org.reactivecouchbase" % "json-lib" % "0.3",
       libraryDependencies += "com.google.code.findbugs" % "jsr305" % "1.3.+",
       organization := "org.reactivecouchbase",
       version := appVersion,
