@@ -115,20 +115,20 @@ public class CouchbaseBucket {
         return FutureHelper$.MODULE$.toRCFuture(ScalaHelper$.MODULE$.javaOptGet(key, reader, bucket, ec), ec);
     }
 
-    public Future<OpResult> incr(String key, Integer of) {
-        return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec);
+    public Future<Integer> incr(String key, Integer of) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec).mapTo(Integer.class);
     }
 
-    public Future<OpResult> incr(String key, Long of) {
-        return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec);
+    public Future<Long> incr(String key, Long of) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.incr(key, of, bucket, ec), ec).mapTo(Long.class);
     }
 
-    public Future<OpResult> decr(String key, Integer of) {
-        return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec);
+    public Future<Integer> decr(String key, Integer of) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec).mapTo(Integer.class);
     }
 
-    public Future<OpResult> decr(String key, Long of) {
-        return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec);
+    public Future<Long> decr(String key, Long of) {
+        return FutureHelper$.MODULE$.toRCFuture(couchbase.decr(key, of, bucket, ec), ec).mapTo(Long.class);
     }
 
     public Future<Integer> incrAndGet(String key, Integer of) {
